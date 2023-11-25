@@ -31,8 +31,8 @@ VERSION_STAGE = os.environ.get('VERSION_STAGE')
 params = {'SecretId': SECRET_ID, 'VersionId': VERSION_ID, 'VersionStage': VERSION_STAGE}
 secrets_not_none_params = {k:v for k, v in params.items() if v is not None}
 
-# # Create the secret manager client
-secrets = boto3.client('secretsmanager', region_name = "us-east-1")
+# Create the secret manager client
+secrets = boto3.client('secretsmanager')
 
 
 def lambda_handler(event, context):
@@ -51,7 +51,7 @@ def lambda_handler(event, context):
     username = secret.get('username')
     password = secret.get('password')
 
-    # #Connect to the cluster
+    # Connect to the cluster
     try:
         conn = None
         conn = psycopg2.connect(

@@ -11,16 +11,11 @@ logger = logging.getLogger()
 xray_recorder.configure(
   context_missing='LOG_ERROR'
 )
-#function = importlib.import_module(lambda_function)
 
 xray_recorder.begin_segment('test_init')
 function = __import__('lambda_function')
 handler = function.lambda_handler
 xray_recorder.end_segment()
-
-# config = {
-#   "SECRET_ID" : os.environ["SECRET_ID"], 
-# }
 
 class TestFunction(unittest.TestCase):
 
@@ -34,8 +29,7 @@ class TestFunction(unittest.TestCase):
       logger.warning(jsonpickle.encode(event))
       context = {'requestid' : '1234'}
       result = handler(event, context)
-      print(str(result))
-      # self.assertRegex(str(result), 'FunctionCount', 'Should match')
+      self.assertRegex(str(result), '[(1,)]', 'Should match')
     except Exception as e:
       logger.error(str(e))
       sys.exit(1)
