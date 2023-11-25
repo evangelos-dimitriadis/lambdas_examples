@@ -1,11 +1,9 @@
 import os
 import sys
 import logging
-import jsonpickle
 import boto3
 import psycopg2
 import json
-from aws_xray_sdk.core import xray_recorder
 from aws_xray_sdk.core import patch_all
 from botocore.exceptions import ClientError
 
