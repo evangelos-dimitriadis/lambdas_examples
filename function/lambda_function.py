@@ -29,8 +29,11 @@ VERSION_STAGE = os.environ.get('VERSION_STAGE')
 params = {'SecretId': SECRET_ID, 'VersionId': VERSION_ID, 'VersionStage': VERSION_STAGE}
 secrets_not_none_params = {k:v for k, v in params.items() if v is not None}
 
+# ENV for moto testing
+endpoint_url = os.environ.get("MOTO_HTTP_ENDPOINT")
+
 # Create the secret manager client
-secrets = boto3.client('secretsmanager')
+secrets = boto3.client('secretsmanager', endpoint_url=endpoint_url)
 
 
 def lambda_handler(event, context):
